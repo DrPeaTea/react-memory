@@ -14,9 +14,9 @@ const cardImg = [
   { id: 8, src: "https://picsum.photos/id/80/200/300" },
   { id: 9, src: "https://picsum.photos/id/90/200/300" },
 ];
-let cardSelected = [];
-let score = 0;
 function App() {
+  const [selected, setSelected] = useState([]);
+  const [score, setScore] = useState(1);
   const [game, setGame] = useState(0);
   let board = cardImg.map(function (imgNum) {
     return (
@@ -26,22 +26,20 @@ function App() {
     );
   });
   function cardPicked(data) {
-    if (cardSelected.includes(data)) {
+    if (selected.includes(data)) {
       alert("game over you got a score of " + score);
-      cardSelected = [];
-      score = 0;
+      setSelected([]);
+      setScore(0);
     } else if (score === 10) {
       alert("you win, you managed to remember all 10 pictures");
-      cardSelected = [];
-      score = 0;
+      setSelected([]);
+      setScore(0);
     } else {
-      cardSelected.push(data);
-      console.log(cardSelected);
+      setSelected([...selected, data]);
       setGame(game + 1);
-      score = score + 1;
+      setScore(score + 1);
     }
   }
-
   return board.sort(() => Math.random() - 0.5);
 }
 
